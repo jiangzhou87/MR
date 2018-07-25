@@ -1,0 +1,133 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def bfly(a, b ,c, curve):\n",
+    "    abc = 2*curve[b]- curve[a]-curve[c]\n",
+    "    return abc*100"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 40,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def ratecurve(a, b, curve):\n",
+    "    ab = curve[a] - curve[b]\n",
+    "    return ab*100"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from datetime import datetime\n",
+    "from dateutil.parser import parse\n",
+    "uscurve = pd.read_csv('Data/bchartswaprate.csv', parse_dates=True, index_col=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "uscurve = uscurve.iloc[::-1]\n",
+    "uscurve"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "(uscurve['5y']*2-uscurve['2y']-uscurve['10y'])*10000"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bfly('2y','5y','10y', uscurve)\n",
+    "uscurve['2y5y10y'] = bfly('2y','5y','10y', uscurve)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "uscurve"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.6.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pandas_datareader\n",
+    "print (pandas_datareader.__version__)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas_datareader as pdr\n",
+    "import fix_yahoo_finance as yf\n",
+    "pdr.data.get_data_yahoo = lambda *a, **kw: yf.download(*a, **kw, progress=False)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:Anaconda]",
+   "language": "python",
+   "name": "conda-env-Anaconda-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
